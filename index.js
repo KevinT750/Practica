@@ -11,9 +11,9 @@ function mensaje(req, resp) {
 
     // Crear un JSON Array estático
     var usuarios = [
-        { "id": 1, "nombre": "Juan Pérez", "correo": "juan@example.com" },
-        { "id": 2, "nombre": "Ana Gómez", "correo": "ana@example.com" },
-        { "id": 3, "nombre": "Carlos Martínez", "correo": "carlos@example.com" }
+        { "id": 1, "nombre": "Kevin Teran", "correo": "steveenteran@gmail.com" },
+        { "id": 2, "nombre": "Ana Gómez", "correo": "ana@gmail.com" },
+        { "id": 3, "nombre": "Emily Anrango", "correo": "anrangoE@hotmail.com" }
     ];
 
     // Convertir el arreglo a JSON y enviarlo como respuesta
