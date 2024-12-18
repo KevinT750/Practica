@@ -14,7 +14,8 @@ function AreaPerim(req, resp) {
         const diametro = parseFloat(query.diametro);
         if (isNaN(diametro)) {
             resp.writeHead(400, { 'Content-Type': 'application/json' });
-            resp.end(JSON.stringify({ error: "Por favor, proporciona un valor numérico para 'diametro'" }));
+            resp.write(JSON.stringify({ error: "Por favor, proporciona un valor numérico para 'diametro'" }));
+            resp.end();
             return;
         }
 
@@ -22,35 +23,39 @@ function AreaPerim(req, resp) {
         area = Math.PI * radio * radio;
         perimetro = 2 * Math.PI * radio;
         resp.writeHead(200, { 'Content-Type': 'application/json' });
-        resp.end(JSON.stringify({
+        resp.write(JSON.stringify({
             Figura: "CIRCULO",
             Radio: radio.toFixed(2),
             Area: area.toFixed(2),
             Perimetro: perimetro.toFixed(2)
         }));
+        resp.end();
     } else if (pathname == '/Rectangulo') {
         const lado1 = parseFloat(query.lado1);
         const lado2 = parseFloat(query.lado2);
         if (isNaN(lado1) || isNaN(lado2)) {
             resp.writeHead(400, { 'Content-Type': 'application/json' });
-            resp.end(JSON.stringify({ error: "Por favor, proporciona valores numéricos para 'lado1' y 'lado2'" }));
+            resp.write(JSON.stringify({ error: "Por favor, proporciona valores numéricos para 'lado1' y 'lado2'" }));
+            resp.end();
             return;
         }
 
         perimetro = 2 * (lado1 + lado2);
         area = lado1 * lado2;
         resp.writeHead(200, { 'Content-Type': 'application/json' });
-        resp.end(JSON.stringify({
+        resp.write(JSON.stringify({
             Figura: "RECTANGULO",
             Perimetro: perimetro.toFixed(2),
             Area: area.toFixed(2)
         }));
+        resp.end();
     } else if (pathname == '/Triangulo') {
         const l1 = parseFloat(query.l1); 
         const l2 = parseFloat(query.l2); 
         if (isNaN(l1) || isNaN(l2)) {
             resp.writeHead(400, { 'Content-Type': 'application/json' });
-            resp.end(JSON.stringify({ error: "Por favor, proporciona valores numéricos para 'l1' y 'l2'" }));
+            resp.write(JSON.stringify({ error: "Por favor, proporciona valores numéricos para 'La base' y 'la altura'" }));
+            resp.end()
             return;
         }
 
@@ -58,15 +63,17 @@ function AreaPerim(req, resp) {
         perimetro = l1 + l2 + hipotenusa;
         area = (l1 * l2) / 2;
         resp.writeHead(200, { 'Content-Type': 'application/json' });
-        resp.end(JSON.stringify({
+        resp.write(JSON.stringify({
             Figura: "TRIANGULO",
             Hipotenusa: hipotenusa.toFixed(2),
             Perimetro: perimetro.toFixed(2),
             Area: area.toFixed(2)
         }));
+        resp.end();
     } else {
         resp.writeHead(404, { 'Content-Type': 'application/json' });
-        resp.end(JSON.stringify({ error: "Ruta no encontrada" }));
+        resp.write(JSON.stringify({ error: "Ruta no encontrada" }));
+        resp.end();
     }
 }
 
