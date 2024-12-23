@@ -1,4 +1,4 @@
-var http = require("http");
+/*var http = require("http");
 var url = require("url");
 
 var server = http.createServer();
@@ -70,7 +70,10 @@ function AreaPerim(req, resp) {
             Area: area.toFixed(2)
         }));
         resp.end();
-    } else {
+    }else if(pathname == '/TrinomioCuadradoPerfecto'){
+        const a = 
+    } 
+    else {
         resp.writeHead(404, { 'Content-Type': 'application/json' });
         resp.write(JSON.stringify({ error: "Ruta no encontrada" }));
         resp.end();
@@ -81,4 +84,46 @@ server.on('request', AreaPerim);
 
 server.listen(3000, function () {
     console.log('Servidor ejecutándose en http://localhost:3000');
+});*/
+
+const express = require("express");
+const app = express();
+
+// Ruta para resolver y factorizar un trinomio cuadrado perfecto
+app.get("/TrinomioCuadradoPerfecto", (req, res) => {
+    const a = parseFloat(req.query.a); // Coeficiente de x^2
+    const b = parseFloat(req.query.b); // Coeficiente de x
+    const c = parseFloat(req.query.c); // Término independiente
+
+    if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        return res.status(400).json({ 
+            error: "Por favor, proporciona valores numéricos para 'a', 'b' y 'c'" 
+        });
+    }
+
+    const raizA = Math.sqrt(a);
+    const raizC = Math.sqrt(c);
+    const esCuadradoPerfecto = raizA % 1 === 0 && raizC % 1 === 0 && b === 2 * raizA * raizC;
+
+    if (!esCuadradoPerfecto) {
+        return res.status(400).json({ 
+            error: "El trinomio no es un cuadrado perfecto",
+            ecuacion: `${a}x^2 + ${b}x + ${c}`
+        });
+    }
+
+    const factor = `(${raizA}x + ${raizC})^2`;
+    res.json({
+        ecuacion: `${a}x^2 + ${b}x + ${c}`,
+        factorizacion: factor
+    });
+});
+
+app.use((req, res) => {
+    res.status(404).json({ error: "Ruta no encontrada" });
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
